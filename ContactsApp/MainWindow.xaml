@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Button x:Name="newContactBtn"
+                Click="newContactBtn_Click"
+                >New Contact</Button>
     </Grid>
 </Window>
