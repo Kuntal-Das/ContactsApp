@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ContactsApp.Models;
+using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +29,24 @@ namespace ContactsApp
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
             //TODO: Save Contact
+            Contact contact = new Contact()
+            {
+                Name = nameTxtBx.Text.Trim(),
+                Email = emailTxtBx.Text.Trim(),
+                PhoneNo = phoneTxtBx.Text.Trim()
+            };
+
+            string DbName = "Contacts.db";
+            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string DbPath = System.IO.Path.Combine(folderPath, DbName);
+
+            using (SQLiteConnection connection = new SQLiteConnection(DbPath))
+            {
+                // if the table exists nextline has no effect
+                connection.CreateTable<Contact>();
+
+                connection.Insert(contact);
+            }
 
             this.Close();
         }

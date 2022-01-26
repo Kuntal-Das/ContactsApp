@@ -11,8 +11,11 @@ namespace ContactsApp.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+        [MaxLength(50)]
         public string Name { get; set; }
+        [Unique]
         public string Email { get; set; }
+        [Unique]
         public string PhoneNo { get; set; }
     }
 }
