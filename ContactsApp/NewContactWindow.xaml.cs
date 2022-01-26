@@ -36,11 +36,7 @@ namespace ContactsApp
                 PhoneNo = phoneTxtBx.Text.Trim()
             };
 
-            string DbName = "Contacts.db";
-            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string DbPath = System.IO.Path.Combine(folderPath, DbName);
-
-            using (SQLiteConnection connection = new SQLiteConnection(DbPath))
+            using (SQLiteConnection connection = new SQLiteConnection(App.DbPath))
             {
                 // if the table exists nextline has no effect
                 connection.CreateTable<Contact>();
