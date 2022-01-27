@@ -1,4 +1,5 @@
-﻿using ContactsApp.Models;
+﻿using ContactsApp.Command;
+using ContactsApp.Models;
 using SQLite;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -16,7 +17,7 @@ namespace ContactsApp.ViewModel
             PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
 
-        private Contact _contact;
+        private Contact? _contact;
         public Contact Contact
         {
             get { return _contact; }
@@ -27,24 +28,24 @@ namespace ContactsApp.ViewModel
             }
         }
 
-        private ICommand _saveContactCommand;
+        private ICommand? _saveContactCommand;
 
         public ICommand SaveContactCommand
         {
             get
             {
                 if (_saveContactCommand == null)
-                    _saveContactCommand = new RelayCommand<>(SaveContactCommandExecute, CanSaveContactCommandExecute, false);
+                    _saveContactCommand = new RelayCommand(SaveContactCommandExecute, CanSaveContactCommandExecute, false);
                 return _saveContactCommand;
             }
         }
 
         private bool CanSaveContactCommandExecute(object arg)
         {
-            return (Contact.Error == null);
+            return Contact.Error == null;
         }
 
-        private void SaveContactCommandExecute(Window window)
+        private void SaveContactCommandExecute(object obj)
         {
             using (SQLiteConnection connection = new SQLiteConnection(App.DbPath))
             {
@@ -53,7 +54,12 @@ namespace ContactsApp.ViewModel
 
                 connection.Insert(Contact);
             }
-            window.Close();
+            ((Window)obj).Close();
+        }
+
+        public AddNewContactViewModel()
+        {
+            Contact = new() { Name = "", Email = "", PhoneNo = "" };
         }
     }
 }
