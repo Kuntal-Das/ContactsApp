@@ -1,37 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ContactsApp.Command
 {
-    //public class RelayCommand<T> : ICommand
-    //{
-    //    Action<T> executeAction;
-    //    Func<T, bool> canExecute;
-    //    bool canExecuteCache;
-    //    public RelayCommand(Action<T> executeAction, Func<T, bool> canExecute, bool canExecuteCache)
-    //    {
-    //        this.canExecute = canExecute;
-    //        this.executeAction = executeAction;
-    //        this.canExecuteCache = canExecuteCache;
-    //    }
-
-    //    public event EventHandler? CanExecuteChanged
-    //    {
-    //        add => CommandManager.RequerySuggested += value;
-    //        remove => CommandManager.RequerySuggested -= value;
-    //    }
-
-    //    public bool CanExecute(object? parameter)
-    //    {
-    //        return canExecute == null ? true : canExecute((T)parameter);
-    //    }
-
-    //    public void Execute(object? parameter)
-    //    {
-    //        executeAction((T)parameter);
-    //    }
-    //}
-
     public class RelayCommand : ICommand
     {
         Action<object> executeAction;
