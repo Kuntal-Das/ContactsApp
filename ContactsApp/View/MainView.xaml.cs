@@ -1,28 +1,27 @@
-using ContactsApp.Models;
+﻿using ContactsApp.Models;
 using System.Windows;
 
-namespace ContactsApp
+namespace ContactsApp.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainView : Window
     {
-        public MainWindow()
+        public MainView()
         {
             InitializeComponent();
 
             ReadDatabase();
         }
 
-        private void newContactBtn_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             NewContactWindow newContactWindow = new();
             newContactWindow.ShowDialog();
 
             ReadDatabase();
         }
-
         void ReadDatabase()
         {
             using (SQLite.SQLiteConnection conn = new SQLite.SQLiteConnection(App.DbPath))
