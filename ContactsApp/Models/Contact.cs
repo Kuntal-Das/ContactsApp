@@ -12,14 +12,14 @@ namespace ContactsApp.Models
         public int Id
         {
             get { return _id; }
-            set { _id = value; OnPropertyChange(); }
+            set { _id = value; }
         }
 
         private string _name;
         [MaxLength(50)]
         public string Name
         {
-            get { return _name.Trim(); }
+            get { return _name; }
             set { _name = value; OnPropertyChange(); }
         }
 
@@ -27,7 +27,7 @@ namespace ContactsApp.Models
         [Unique]
         public string Email
         {
-            get { return _email.Trim(); }
+            get { return _email; }
             set { _email = value; OnPropertyChange(); }
         }
 
@@ -35,11 +35,11 @@ namespace ContactsApp.Models
         [Unique]
         public string PhoneNo
         {
-            get { return _phoneNo.Trim(); }
+            get { return _phoneNo; }
             set { _phoneNo = value; OnPropertyChange(); }
         }
 
-        public string Error => null;
+        public string? Error => null;
         public string this[string propName]
         {
             get

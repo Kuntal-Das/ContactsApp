@@ -42,9 +42,10 @@
                  Margin="0,0,0,5">
             <TextBox.Text>
                 <Binding Path="Contact.Name"
-                         Mode="TwoWay"
+                         Mode="OneWayToSource"
                          ValidatesOnDataErrors="True"
-                         UpdateSourceTrigger="LostFocus"/>
+                         UpdateSourceTrigger="LostFocus"
+                         Source="{StaticResource AddNewContactViewModel}"/>
             </TextBox.Text>
         </TextBox>
 
@@ -56,9 +57,10 @@
                  Margin="0,0,0,5">
             <TextBox.Text>
                 <Binding Path="Contact.Email"
-                         Mode="TwoWay"
+                         Mode="OneWayToSource"
                          ValidatesOnDataErrors="True"
-                         UpdateSourceTrigger="LostFocus"/>
+                         UpdateSourceTrigger="LostFocus"
+                         Source="{StaticResource AddNewContactViewModel}"/>
             </TextBox.Text>
         </TextBox>
 
@@ -70,9 +72,10 @@
                  Margin="0,0,0,5">
             <TextBox.Text>
                 <Binding Path="Contact.PhoneNo"
-                         Mode="TwoWay"
+                         Mode="OneWayToSource"
                          ValidatesOnDataErrors="True"
-                         UpdateSourceTrigger="LostFocus"/>
+                         UpdateSourceTrigger="LostFocus"
+                         Source="{StaticResource AddNewContactViewModel}"/>
             </TextBox.Text>
         </TextBox>
 

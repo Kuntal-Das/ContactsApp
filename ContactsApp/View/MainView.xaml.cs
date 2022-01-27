@@ -17,7 +17,7 @@ namespace ContactsApp.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            NewContactWindow newContactWindow = new();
+            AddNewContactView newContactWindow = new();
             newContactWindow.ShowDialog();
 
             ReadDatabase();

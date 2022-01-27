@@ -17,7 +17,7 @@ namespace ContactsApp.ViewModel
             PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
 
-        private Contact? _contact;
+        private Contact _contact;
         public Contact Contact
         {
             get { return _contact; }
@@ -28,7 +28,7 @@ namespace ContactsApp.ViewModel
             }
         }
 
-        private ICommand? _saveContactCommand;
+        private ICommand _saveContactCommand;
 
         public ICommand SaveContactCommand
         {
