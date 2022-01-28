@@ -1,4 +1,5 @@
 ﻿using ContactsApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -32,7 +33,7 @@ namespace ContactsApp.View
             using (SQLite.SQLiteConnection conn = new(App.DbPath))
             {
                 conn.CreateTable<Contact>();
-                _contacts = conn.Table<Contact>().ToList();
+                _contacts = conn.Table<Contact>().ToList().OrderBy(c => c.Name).ToList();
             }
             ContactsListView.ItemsSource = _contacts;
         }
@@ -41,9 +42,13 @@ namespace ContactsApp.View
         {
             TextBox searchTextBox = (TextBox)sender;
 
-            var filteredList = _contacts
-                .Where(contact => contact.Name.Contains(searchTextBox.Text,System.StringComparison.OrdinalIgnoreCase))
-                .ToList();
+            var filteredList = (from contact in _contacts
+                                where contact.Name.Contains(searchTextBox.Text, StringComparison.OrdinalIgnoreCase)
+                                orderby contact.Name ascending
+                                select contact).ToList();
+
+
+            //_contacts.Where(contact => contact.Name.Contains(searchTextBox.Text, System.StringComparison.OrdinalIgnoreCase)).ToList();
 
             ContactsListView.ItemsSource = filteredList;
         }
