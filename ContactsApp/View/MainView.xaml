@@ -4,9 +4,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ContactsApp.View"
+        xmlns:mainVm="clr-namespace:ContactsApp.ViewModel"
         mc:Ignorable="d"
         Title="MainView" Height="450" Width="800">
-    <Grid>
-        <Button Click="Button_Click">Add Contact</Button>
-    </Grid>
+    <Window.Resources>
+        <mainVm:MainViewModel x:Key="MainViewModel"/>
+
+    </Window.Resources>
+    <StackPanel Margin="10" DataContext="{StaticResource MainViewModel}">
+        <Button Click="Button_Click" Margin="0,5">Add Contact</Button>
+        <ListView x:Name="ContactsListView" Height="280">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}"
+                                   FontSize="20"
+                                   FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Email}"
+                                   FontSize="15"
+                                   Foreground="DodgerBlue"/>
+                        <TextBlock Text="{Binding PhoneNo}"
+                                   FontSize="15"
+                                   FontStyle="Italic"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackPanel>
 </Window>

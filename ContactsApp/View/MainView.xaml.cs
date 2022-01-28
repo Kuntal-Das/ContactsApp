@@ -1,4 +1,5 @@
 ﻿using ContactsApp.Models;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace ContactsApp.View
@@ -22,13 +23,15 @@ namespace ContactsApp.View
 
             ReadDatabase();
         }
-        void ReadDatabase()
+        private void ReadDatabase()
         {
-            using (SQLite.SQLiteConnection conn = new SQLite.SQLiteConnection(App.DbPath))
+            List<Contact> contacts;
+            using (SQLite.SQLiteConnection conn = new(App.DbPath))
             {
                 conn.CreateTable<Contact>();
-                var contacts = conn.Table<Contact>().ToList();
+                contacts = conn.Table<Contact>().ToList();
             }
+            ContactsListView.ItemsSource = contacts;
         }
     }
 }
