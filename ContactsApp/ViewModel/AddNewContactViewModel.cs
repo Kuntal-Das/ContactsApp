@@ -1,31 +1,18 @@
 ﻿using ContactsApp.Command;
 using ContactsApp.Models;
 using SQLite;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 
 namespace ContactsApp.ViewModel
 {
-    public class AddNewContactViewModel : INotifyPropertyChanged
+    public class AddNewContactViewModel
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        private void OnPropertyChange([CallerMemberName] string propName = "")
-        {
-            if (PropertyChanged == null) return;
-            PropertyChanged(this, new PropertyChangedEventArgs(propName));
-        }
-
         private Contact _contact;
         public Contact Contact
         {
             get { return _contact; }
-            set
-            {
-                _contact = value;
-                OnPropertyChange();
-            }
+            set { _contact = value; }
         }
 
         private ICommand _saveContactCommand;
@@ -40,21 +27,27 @@ namespace ContactsApp.ViewModel
             }
         }
 
-        private bool CanSaveContactCommandExecute(object arg)
+        private bool CanSaveContactCommandExecute(object window)
         {
-            return Contact.Error == null;
+            var props = typeof(Contact).GetProperties();
+
+            foreach (var prop in props)
+            {
+                if (Contact[prop.Name] != null) return false;
+            }
+            return true;
         }
 
-        private void SaveContactCommandExecute(object obj)
+        private void SaveContactCommandExecute(object window)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(App.DbPath))
+            using (SQLiteConnection connection = new(App.DbPath))
             {
                 // if the table exists nextline has no effect
                 connection.CreateTable<Contact>();
 
                 connection.Insert(Contact);
             }
-            ((Window)obj).Close();
+            ((Window)window).Close();
         }
 
         public AddNewContactViewModel()

@@ -7,22 +7,32 @@
         xmlns:local="clr-namespace:ContactsApp.View"
         xmlns:contactVm="clr-namespace:ContactsApp.ViewModel"
         mc:Ignorable="d"
-        Title="AddNewContactView" Height="450" Width="800">
+        Title="AddNewContactView" Height="250" Width="350">
     <Window.Resources>
         <contactVm:AddNewContactViewModel x:Key="AddNewContactViewModel"/>
+
+        <ControlTemplate x:Key="validationTemplate">
+            <DockPanel>
+                <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+                <AdornedElementPlaceholder/>
+            </DockPanel>
+        </ControlTemplate>
 
         <Style TargetType="TextBox">
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="True">
                     <Setter Property="ToolTip" 
                             Value="{Binding 
-                        RelativeSource={x:Static RelativeSource.Self},
-                        Path=(Validation.Errors)[0].ErrorContent}"/>
+                        Path=(Validation.Errors).CurrentItem.ErrorContent,
+                        RelativeSource={x:Static RelativeSource.Self}}"/>
                 </Trigger>
             </Style.Triggers>
+            <Setter Property="Margin" Value="0,5,5,0"/>
+            <Setter Property="Padding" Value="1,0"/>
         </Style>
+        
     </Window.Resources>
-    <Grid Margin="10">
+    <Grid Margin="10" DataContext="{StaticResource AddNewContactViewModel}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
@@ -44,8 +54,7 @@
                 <Binding Path="Contact.Name"
                          Mode="OneWayToSource"
                          ValidatesOnDataErrors="True"
-                         UpdateSourceTrigger="LostFocus"
-                         Source="{StaticResource AddNewContactViewModel}"/>
+                         UpdateSourceTrigger="PropertyChanged"/>
             </TextBox.Text>
         </TextBox>
 
@@ -59,8 +68,7 @@
                 <Binding Path="Contact.Email"
                          Mode="OneWayToSource"
                          ValidatesOnDataErrors="True"
-                         UpdateSourceTrigger="LostFocus"
-                         Source="{StaticResource AddNewContactViewModel}"/>
+                         UpdateSourceTrigger="PropertyChanged"/>
             </TextBox.Text>
         </TextBox>
 
@@ -74,13 +82,12 @@
                 <Binding Path="Contact.PhoneNo"
                          Mode="OneWayToSource"
                          ValidatesOnDataErrors="True"
-                         UpdateSourceTrigger="LostFocus"
-                         Source="{StaticResource AddNewContactViewModel}"/>
+                         UpdateSourceTrigger="PropertyChanged"/>
             </TextBox.Text>
         </TextBox>
 
         <Button x:Name="saveBtn"
-                Command="{Binding SaveContactCommand, Source={StaticResource AddNewContactViewModel}}"
+                Command="{Binding SaveContactCommand}"
                 CommandParameter="{Binding ElementName=AddNewContactWindow}"
                 Grid.Row="3"
                 Grid.ColumnSpan="2">Save</Button>
