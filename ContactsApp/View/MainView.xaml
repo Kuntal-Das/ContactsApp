@@ -12,7 +12,10 @@
 
     </Window.Resources>
     <StackPanel Margin="10" DataContext="{StaticResource MainViewModel}">
-        <Button Click="Button_Click" Margin="0,5">Add Contact</Button>
+        <Button Click="Button_Click" Margin="0,0,0,5">Add Contact</Button>
+
+        <TextBox Margin="0,0,0,5" TextChanged="TextBox_TextChanged"/>
+
         <ListView x:Name="ContactsListView" Height="280">
             <ListView.ItemTemplate>
                 <DataTemplate>
