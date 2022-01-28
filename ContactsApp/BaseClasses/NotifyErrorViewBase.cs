@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace ContactsApp.BaseClasses
 {
-    public abstract class NotifyErrorInfoBase : INotifyDataErrorInfo
+    public abstract class NotifyErrorViewBase : INotifyDataErrorInfo
     {
         private readonly Dictionary<string, List<string>> _propErrors;
 
@@ -16,7 +16,7 @@ namespace ContactsApp.BaseClasses
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
 
-        public NotifyErrorInfoBase()
+        public NotifyErrorViewBase()
         {
             _propErrors = new Dictionary<string, List<string>>();
         }
