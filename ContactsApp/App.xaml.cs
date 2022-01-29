@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ContactsApp.Helpers;
+using System;
 using System.Windows;
 
 namespace ContactsApp
@@ -10,8 +11,6 @@ namespace ContactsApp
 
     public partial class App : Application
     {
-        private static string DbName = "Contacts.db";
-        private static string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        public static string DbPath = System.IO.Path.Combine(folderPath, DbName);
+        public static ContactDbContext ContactDbContext = new();
     }
 }

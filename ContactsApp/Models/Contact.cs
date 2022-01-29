@@ -1,5 +1,6 @@
 ﻿using ContactsApp.BaseClasses;
 using SQLite;
+using System;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 
@@ -52,12 +53,7 @@ namespace ContactsApp.Models
             }
         }
 
-        public override string ToString()
-        {
-            return $"{Name}\t{PhoneNo}\t{Email}";
-        }
-
-        public string Error => null;
+        public string Error => "";
 
         public string this[string propName]
         {
@@ -83,6 +79,26 @@ namespace ContactsApp.Models
                 }
                 return result;
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{Name}\t{PhoneNo}\t{Email}";
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is null or not Contact)return false;
+
+            var otherContact = obj as Contact;
+            return Id.Equals(otherContact.Id) &&
+                Name.Equals(otherContact.Name, StringComparison.OrdinalIgnoreCase) &&
+                PhoneNo.Equals(otherContact.PhoneNo) &&
+                Email.Equals(otherContact.Email);
+        }
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name, PhoneNo, Email);
         }
     }
 }
