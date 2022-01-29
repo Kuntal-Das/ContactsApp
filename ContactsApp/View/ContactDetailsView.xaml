@@ -1,5 +1,5 @@
-﻿<Window x:Class="ContactsApp.View.AddNewContactView"
-        x:Name="AddNewContactWindow"
+﻿<Window x:Name="ContactDetailsWindow"
+        x:Class="ContactsApp.View.ContactDetailsView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,16 +7,10 @@
         xmlns:local="clr-namespace:ContactsApp.View"
         xmlns:vm="clr-namespace:ContactsApp.ViewModel"
         mc:Ignorable="d"
-        Title="AddNewContactView" Height="250" Width="350">
+        Title="ContactDetailsView" Height="250" Width="300">
     <Window.Resources>
-        <vm:AddNewContactViewModel x:Key="AddNewContactViewModel"/>
 
-        <ControlTemplate x:Key="validationTemplate">
-            <DockPanel>
-                <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
-                <AdornedElementPlaceholder/>
-            </DockPanel>
-        </ControlTemplate>
+        <!--<vm:ContactDetailsViewModel x:Key="ContactDetailsViewModel"/>-->
 
         <Style TargetType="TextBox">
             <Style.Triggers>
@@ -27,12 +21,19 @@
                         RelativeSource={x:Static RelativeSource.Self}}"/>
                 </Trigger>
             </Style.Triggers>
-            <Setter Property="Margin" Value="0,5,5,0"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
             <Setter Property="Padding" Value="1,0"/>
         </Style>
-        
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="0,25,0,0"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="20,5"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
     </Window.Resources>
-    <Grid Margin="10" DataContext="{StaticResource AddNewContactViewModel}">
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
@@ -42,6 +43,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0"
@@ -52,7 +54,7 @@
                  Margin="0,0,0,5">
             <TextBox.Text>
                 <Binding Path="Contact.Name"
-                         Mode="OneWayToSource"
+                         Mode="TwoWay"
                          ValidatesOnDataErrors="True"
                          UpdateSourceTrigger="PropertyChanged"/>
             </TextBox.Text>
@@ -66,7 +68,7 @@
                  Margin="0,0,0,5">
             <TextBox.Text>
                 <Binding Path="Contact.Email"
-                         Mode="OneWayToSource"
+                         Mode="TwoWay"
                          ValidatesOnDataErrors="True"
                          UpdateSourceTrigger="PropertyChanged"/>
             </TextBox.Text>
@@ -80,16 +82,23 @@
                  Margin="0,0,0,5">
             <TextBox.Text>
                 <Binding Path="Contact.PhoneNo"
-                         Mode="OneWayToSource"
+                         Mode="TwoWay"
                          ValidatesOnDataErrors="True"
                          UpdateSourceTrigger="PropertyChanged"/>
             </TextBox.Text>
         </TextBox>
 
-        <Button x:Name="saveBtn"
-                Command="{Binding SaveContactCommand}"
-                CommandParameter="{Binding ElementName=AddNewContactWindow}"
+        <Button x:Name="updateBtn"
+                Command="{Binding UpdateContactCommand}"
+                CommandParameter="{Binding ElementName=ContactDetailsWindow}"
+                Background="DodgerBlue"
                 Grid.Row="3"
-                Grid.ColumnSpan="2">Save</Button>
+                Grid.Column="1">Update</Button>
+        <Button x:Name="deleteBtn"
+                Command="{Binding DeleteContactCommand}"
+                CommandParameter="{Binding ElementName=ContactDetailsWindow}"
+                Background="Red"
+                Grid.Row="3"
+                Grid.Column="0">Delete</Button>
     </Grid>
 </Window>

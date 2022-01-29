@@ -53,7 +53,20 @@ namespace ContactsApp.Models
             }
         }
 
-        public string Error => "";
+        public string Error
+        {
+            get
+            {
+                var props = typeof(Contact).GetProperties();
+
+                foreach (var prop in props)
+                {
+                    if (this[prop.Name] != null)
+                        return this[prop.Name];
+                }
+                return "";
+            }
+        }
 
         public string this[string propName]
         {
@@ -88,7 +101,7 @@ namespace ContactsApp.Models
 
         public override bool Equals(object? obj)
         {
-            if (obj is null or not Contact)return false;
+            if (obj is null or not Contact) return false;
 
             var otherContact = obj as Contact;
             return Id.Equals(otherContact.Id) &&

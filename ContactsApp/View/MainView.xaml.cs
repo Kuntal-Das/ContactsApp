@@ -30,12 +30,7 @@ namespace ContactsApp.View
         }
         private void ReadDatabase()
         {
-            using (SQLite.SQLiteConnection conn = new(App.DbPath))
-            {
-                conn.CreateTable<Contact>();
-                _contacts = conn.Table<Contact>().ToList().OrderBy(c => c.Name).ToList();
-            }
-            ContactsListView.ItemsSource = _contacts;
+            ContactsListView.ItemsSource = App.ContactDbContext.Contacts;
         }
 
         private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
@@ -51,6 +46,18 @@ namespace ContactsApp.View
             //_contacts.Where(contact => contact.Name.Contains(searchTextBox.Text, System.StringComparison.OrdinalIgnoreCase)).ToList();
 
             ContactsListView.ItemsSource = filteredList;
+        }
+
+        private void ContactsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Contact selectedContact = (Contact)ContactsListView.SelectedItem;
+            if (selectedContact != null)
+            {
+                ContactDetailsView contactDetailsView = new(selectedContact);
+                contactDetailsView.ShowDialog();
+
+                ReadDatabase();
+            }
         }
     }
 }

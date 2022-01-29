@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ContactsApp.View"
-        xmlns:mainVm="clr-namespace:ContactsApp.ViewModel"
+        xmlns:vm="clr-namespace:ContactsApp.ViewModel"
         mc:Ignorable="d"
         Title="MainView" Height="450" Width="800">
     <Window.Resources>
-        <mainVm:MainViewModel x:Key="MainViewModel"/>
+        <vm:MainViewModel x:Key="MainViewModel"/>
 
     </Window.Resources>
     <StackPanel Margin="10" DataContext="{StaticResource MainViewModel}">
@@ -16,7 +16,9 @@
 
         <TextBox Margin="0,0,0,5" TextChanged="TextBox_TextChanged"/>
 
-        <ListView x:Name="ContactsListView" Height="280">
+        <ListView x:Name="ContactsListView" 
+                  Height="280"
+                  SelectionChanged="ContactsListView_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>

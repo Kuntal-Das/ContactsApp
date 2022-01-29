@@ -29,24 +29,12 @@ namespace ContactsApp.ViewModel
 
         private bool CanSaveContactCommandExecute(object window)
         {
-            var props = typeof(Contact).GetProperties();
-
-            foreach (var prop in props)
-            {
-                if (Contact[prop.Name] != null) return false;
-            }
-            return true;
+            return string.IsNullOrWhiteSpace(Contact.Error);
         }
 
         private void SaveContactCommandExecute(object window)
         {
-            using (SQLiteConnection connection = new(App.DbPath))
-            {
-                // if the table exists nextline has no effect
-                connection.CreateTable<Contact>();
-
-                connection.Insert(Contact);
-            }
+            App.ContactDbContext.AddContact(Contact);
             ((Window)window).Close();
         }
 
