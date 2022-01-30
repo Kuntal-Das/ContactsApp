@@ -6,19 +6,36 @@
         xmlns:local="clr-namespace:ContactsApp.View"
         xmlns:vm="clr-namespace:ContactsApp.ViewModel"
         mc:Ignorable="d"
-        Title="MainView" Height="450" Width="800">
+        Title="MainView" Height="450" Width="400">
     <Window.Resources>
         <vm:MainViewModel x:Key="MainViewModel"/>
 
     </Window.Resources>
-    <StackPanel Margin="10" DataContext="{StaticResource MainViewModel}">
-        <Button Click="Button_Click" Margin="0,0,0,5">Add Contact</Button>
+    <Grid Margin="10" DataContext="{StaticResource MainViewModel}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <TextBox Margin="0,0,0,5" TextChanged="TextBox_TextChanged"/>
+
+        <Button Margin="0,0,0,5"
+                Click="Button_Click" 
+                Grid.Row="0" 
+                Grid.Column="0">Add Contact</Button>
+
+        <TextBox Margin="0,0,0,5"
+                 TextChanged="TextBox_TextChanged"
+                 Grid.Row="1"
+                 Grid.Column="0"/>
 
         <ListView x:Name="ContactsListView" 
-                  Height="280"
-                  SelectionChanged="ContactsListView_SelectionChanged">
+                  SelectionChanged="ContactsListView_SelectionChanged"
+                  Grid.Row="2"
+                  Grid.Column="0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -35,5 +52,5 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </StackPanel>
+    </Grid>
 </Window>

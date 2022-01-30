@@ -12,12 +12,10 @@ namespace ContactsApp.View
     /// </summary>
     public partial class MainView : Window
     {
-        private List<Contact> _contacts;
         public MainView()
         {
             InitializeComponent();
 
-            _contacts = new();
             ReadDatabase();
         }
 
@@ -30,14 +28,14 @@ namespace ContactsApp.View
         }
         private void ReadDatabase()
         {
-            ContactsListView.ItemsSource = App.ContactDbContext.Contacts;
+            ContactsListView.ItemsSource = App.ContactDbContext.Contacts.OrderBy(c => c.Name);
         }
 
-        private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox searchTextBox = (TextBox)sender;
 
-            var filteredList = (from contact in _contacts
+            var filteredList = (from contact in App.ContactDbContext.Contacts
                                 where contact.Name.Contains(searchTextBox.Text, StringComparison.OrdinalIgnoreCase)
                                 orderby contact.Name ascending
                                 select contact).ToList();
