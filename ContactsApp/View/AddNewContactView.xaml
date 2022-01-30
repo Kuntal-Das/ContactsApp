@@ -11,12 +11,12 @@
     <Window.Resources>
         <vm:AddNewContactViewModel x:Key="AddNewContactViewModel"/>
 
-        <ControlTemplate x:Key="validationTemplate">
+        <!--<ControlTemplate x:Key="validationTemplate">
             <DockPanel>
                 <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
                 <AdornedElementPlaceholder/>
             </DockPanel>
-        </ControlTemplate>
+        </ControlTemplate>-->
 
         <Style TargetType="TextBox">
             <Style.Triggers>
@@ -30,7 +30,7 @@
             <Setter Property="Margin" Value="0,5,5,0"/>
             <Setter Property="Padding" Value="1,0"/>
         </Style>
-        
+
     </Window.Resources>
     <Grid Margin="10" DataContext="{StaticResource AddNewContactViewModel}">
         <Grid.ColumnDefinitions>
