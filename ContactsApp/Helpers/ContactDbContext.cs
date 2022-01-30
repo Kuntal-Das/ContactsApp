@@ -2,6 +2,7 @@
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ContactsApp.Helpers
 {
@@ -14,6 +15,7 @@ namespace ContactsApp.Helpers
         private DateTime _lastFetched;
         private List<Contact> _contacts;
         private SQLiteConnection _conn;
+        private SQLiteAsyncConnection _connAsync;
 
         public List<Contact> Contacts
         {
@@ -47,6 +49,19 @@ namespace ContactsApp.Helpers
             }
             _lastFetched = DateTime.UtcNow;
         }
+        private async Task GetContactsFromDbAsync()
+        {
+            try
+            {
+                _connAsync = new(DbPath);
+                Contacts = await _connAsync.Table<Contact>().ToListAsync();
+                _lastFetched = DateTime.UtcNow;
+            }
+            finally
+            {
+                await _connAsync.CloseAsync();
+            }
+        }
 
         public int AddContact(Contact newContact)
         {
@@ -56,6 +71,21 @@ namespace ContactsApp.Helpers
                 rowsAffected = _conn.Insert(newContact);
             }
             GetContactsFromDb();
+            return rowsAffected;
+        }
+        public async Task<int> AddContactAsync(Contact newContact)
+        {
+            int rowsAffected = 0;
+            try
+            {
+                _connAsync = new SQLiteAsyncConnection(DbPath);
+                rowsAffected = await _connAsync.InsertAsync(newContact);
+                await GetContactsFromDbAsync();
+            }
+            finally
+            {
+                await _connAsync.CloseAsync();
+            }
             return rowsAffected;
         }
 
@@ -69,6 +99,21 @@ namespace ContactsApp.Helpers
             GetContactsFromDb();
             return rowsAffected;
         }
+        public async Task<int> UpdateContactAsync(Contact newContact)
+        {
+            int rowsAffected = 0;
+            try
+            {
+                _connAsync = new(DbPath);
+                rowsAffected = await _connAsync.UpdateAsync(newContact);
+                await GetContactsFromDbAsync();
+            }
+            finally
+            {
+                await _connAsync.CloseAsync();
+            }
+            return rowsAffected;
+        }
 
         public int DeleteContact(Contact contact)
         {
@@ -80,5 +125,21 @@ namespace ContactsApp.Helpers
             GetContactsFromDb();
             return rowsAffected;
         }
+        public async Task<int> DeleteContactAsync(Contact contact)
+        {
+            int rowsAffected = 0;
+            try
+            {
+                _connAsync = new(DbPath);
+                rowsAffected = await _connAsync.DeleteAsync(contact);
+                await GetContactsFromDbAsync();
+            }
+            finally
+            {
+                await _connAsync.CloseAsync();
+            }
+            return rowsAffected;
+        }
+
     }
 }
