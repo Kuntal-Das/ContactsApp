@@ -7,6 +7,8 @@
         xmlns:local="clr-namespace:ContactsApp.View"
         xmlns:vm="clr-namespace:ContactsApp.ViewModel"
         mc:Ignorable="d"
+        WindowStyle="ToolWindow"
+        ResizeMode="NoResize"
         Title="ContactDetailsView" Height="250" Width="300">
     <Window.Resources>
 

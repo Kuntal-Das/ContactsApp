@@ -10,6 +10,9 @@ namespace ContactsApp.View
         public AddNewContactView()
         {
             InitializeComponent();
+
+            Owner = Application.Current.MainWindow;
+            WindowStartupLocation = WindowStartupLocation.CenterOwner;
         }
     }
 }
