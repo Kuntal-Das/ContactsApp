@@ -1,6 +1,5 @@
 ﻿using ContactsApp.Command;
 using ContactsApp.Models;
-using SQLite;
 using System.Windows;
 using System.Windows.Input;
 
